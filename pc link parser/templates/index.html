@@ -1,0 +1,170 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC-Remote</title>
+    <h1 class="sup_site">Suported Sites</h1>
+    <div id="menu">
+        <ul>
+          <li><img src="meta_stream.png"><a href="https://movie-web.app/search/movie" target="_blank">Movie-Web</a></li>
+        </ul>
+      </div>    
+</head>
+<link rel="stylesheet" href="style.css">
+<style>
+    .inst{background-color: rgb(183, 183, 183); }
+    
+    body{background-color: rgb(70, 69, 69);}
+    label{  text-align: center;}
+    h1.sup_site{font-size: 20px;}
+    body {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 80%;
+	font-weight: bold;
+	}
+
+    h1 {
+        font-family:Verdana, Arial, Helvetica, sans-serif;
+        font-size:16px;
+        font-weight:bold;
+        margin:0;
+        padding:0;
+        }
+
+    hr {
+        border:none;
+        border-top:1px solid #CCCCCC;
+        height:1px;
+        margin-bottom:25px;
+        }
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        }
+
+    img {
+        border: none;
+        }
+        
+    #menu {
+        width: 200px;
+        margin: 10px;
+        }
+        
+    #menu li a {
+        height: 32px;
+        voice-family: "\"}\""; 
+        voice-family: inherit;
+        height: 24px;
+        text-decoration: none;
+        }	
+        
+    #menu li a:link, #menu li a:visited {
+        color: #FFF;
+        display: block;
+        background:  url(menu.gif);
+        padding: 8px 0 0 35px;
+        }
+        
+    #menu li a:hover {
+        color: #FFF;
+        background:  url(menu.gif) 0 -32px;
+        padding: 8px 0 0 35px;
+        }
+</style>
+<body>
+    <form id="userInputForm">
+        <div class="title">
+        <label for="userInput">Enter The Movie link:</label>
+        </div>
+        <input type="text" id="userInput" name="userInput" size="50">
+        <button type="button" onclick="submitForm()">Watch video</button>
+        <button type="button" onclick="pause()">Pause video</button>
+        <button type="button" onclick="play()">play video</button>
+        <button type="button" onclick="back()"> << 30s</button>
+        <button type="button" onclick="forward()"> 30s >></button>
+    </form>
+    <br>
+    <br>
+    <br>
+    <div class="inst">
+    <ol>
+        <li><p class="steps">First, click a supported movie site and find the movie/series you wish to watch.</p></li>
+        <li><p class="steps">Copy the link from the chosen site right before the video plays.</p></li>
+        <li><p class="steps">Paste the link in the text box on this site, click "Watch Video," and wait for it to start.</p></li>
+        <li><p class="steps">Use the onscreen button to control the video playback.</p></li>
+    </ol>
+    </div>
+
+    <div id="result"></div>
+
+    <script>
+        function submitForm() {
+            var userInput = document.getElementById("userInput").value;
+
+            // Send user input to the server using AJAX
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/process_input", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    document.getElementById("result").innerHTML = "Result from server: " + xhr.responseText;
+                }
+            };
+            xhr.send(JSON.stringify({ userInput: userInput }));
+        }
+
+        function pause() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/pause_video", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    document.getElementById("result").innerHTML = "Result from server: " + xhr.responseText;
+                }
+            };
+            xhr.send(JSON.stringify({ userInput: userInput }));
+        }
+
+        function play() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/play_video", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    document.getElementById("result").innerHTML = "Result from server: " + xhr.responseText;
+                }
+            };
+            xhr.send(JSON.stringify({ userInput: userInput }));
+        }
+
+        function forward() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/forward", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    document.getElementById("result").innerHTML = "Result from server: " + xhr.responseText;
+                }
+            };
+            xhr.send(JSON.stringify({ userInput: userInput }));
+        }
+        
+        function back() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/back", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    document.getElementById("result").innerHTML = "Result from server: " + xhr.responseText;
+                }
+            };
+            xhr.send(JSON.stringify({ userInput: userInput }));
+        }
+    </script>
+</body>
+</html>
